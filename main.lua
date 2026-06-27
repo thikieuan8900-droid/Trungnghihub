@@ -481,15 +481,30 @@ RunService.Heartbeat:Connect(function()
     end
 
     -- 6. TÍNH NĂNG PRISON LIFE: NO CLIP
-    if PLNoClipActive then
-        pcall(function()
-            for _, part in pairs(Char:GetDescendants()) do
+ -- 6. TÍNH NĂNG PRISON LIFE: NO CLIP (Đã chỉnh sửa)
+local RunService = game:GetService("RunService")
+
+if PLNoClipActive then
+    -- Sử dụng kết nối RenderStepped để chạy liên tục mỗi khung hình
+    local connection
+    connection = RunService.RenderStepped:Connect(function()
+        if not PLNoClipActive then 
+            connection:Disconnect() -- Ngắt kết nối khi tắt tính năng
+            return 
+        end
+        
+        -- Vô hiệu hóa va chạm cho toàn bộ cơ thể
+        local character = game.Players.LocalPlayer.Character
+        if character then
+            for _, part in pairs(character:GetDescendants()) do
                 if part:IsA("BasePart") then
                     part.CanCollide = false
                 end
             end
-        end)
-    end
+        end
+    end)
+        end
+        
 
     -- 7. TÍNH NĂNG PRISON LIFE: AUTO NẠP ĐẠN / VÔ HẠN ĐẠN
     if PLInfAmmoActive then
