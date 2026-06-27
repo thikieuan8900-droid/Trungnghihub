@@ -37,14 +37,14 @@ FOVCircle.Thickness = 1
 FOVCircle.Filled = false
 
 -- Xóa menu cũ nếu có trùng lặp
-if PlayerGui:FindFirstChild("TrungNghiEvadeStyleMenu") then
+if PlayerGui:FindFirstChild("TrungNghi Dái To") then
     PlayerGui.TrungNghiEvadeStyleMenu:Destroy()
 end
 
 -- 2. TẠO GIAO DIỆN PHÂN TAB CHUYÊN NGHIỆP (EVADE STYLE)
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = PlayerGui
-ScreenGui.Name = "TrungNghiEvadeStyleMenu"
+ScreenGui.Name = "TrungNghi Dái To"
 ScreenGui.ResetOnSpawn = false
 
 local MainFrame = Instance.new("Frame")
@@ -93,7 +93,7 @@ TabSpacer.LayoutOrder = 0
 local TabBtnShooter = Instance.new("TextButton", SideBar)
 TabBtnShooter.Size = UDim2.new(1, -16, 0, 32)
 TabBtnShooter.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-TabBtnShooter.Text = "🔫 Shooter Main"
+TabBtnShooter.Text = "🔫 TrungNghi Gun"
 TabBtnShooter.TextColor3 = Color3.fromRGB(255, 255, 255)
 TabBtnShooter.Font = Enum.Font.SourceSansBold
 TabBtnShooter.TextSize = 13
@@ -103,7 +103,7 @@ Instance.new("UICorner", TabBtnShooter).CornerRadius = UDim.new(0, 6)
 local TabBtnMM2 = Instance.new("TextButton", SideBar)
 TabBtnMM2.Size = UDim2.new(1, -16, 0, 32)
 TabBtnMM2.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
-TabBtnMM2.Text = "🕵️ MM2 Main"
+TabBtnMM2.Text = "🕵️ TrungNghi MM2"
 TabBtnMM2.TextColor3 = Color3.fromRGB(180, 180, 180)
 TabBtnMM2.Font = Enum.Font.SourceSansBold
 TabBtnMM2.TextSize = 13
@@ -113,7 +113,7 @@ Instance.new("UICorner", TabBtnMM2).CornerRadius = UDim.new(0, 6)
 local TabBtnPL = Instance.new("TextButton", SideBar)
 TabBtnPL.Size = UDim2.new(1, -16, 0, 32)
 TabBtnPL.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
-TabBtnPL.Text = "🔒 Prison Life"
+TabBtnPL.Text = "🔒 TrungNghi Pri"
 TabBtnPL.TextColor3 = Color3.fromRGB(180, 180, 180)
 TabBtnPL.Font = Enum.Font.SourceSansBold
 TabBtnPL.TextSize = 13
@@ -292,11 +292,11 @@ local function CreateEvadeSlider(parentCanvas, titleText, min, max, default, cal
 end
 
 -- KHỞI TẠO TÍNH NĂNG TAB 1: SHOOTER MAIN
-CreateEvadeToggle(ShooterCanvas, "💀 Kích Hoạt Aimbot (Khóa Mục Tiêu)", function(state) AimbotActive = state end)
-CreateEvadeToggle(ShooterCanvas, "👁️ Hiển Thị Vòng FOV", function(state) FOVActive = state; FOVCircle.Visible = state end)
-CreateEvadeToggle(ShooterCanvas, "✨ ESP Chams (Nhìn Xuyên Tường)", function(state) ESPActive = state end)
-CreateEvadeToggle(ShooterCanvas, "🚀 Kích Hoạt Fly Hack (Bay Cần Gạt)", function(state) FlyActive = state end)
-CreateEvadeToggle(ShooterCanvas, "🎯 Kích Hoạt Hitbox (Tăng Tầm Đánh)", function(state) HitboxActive = state end) -- HITBOX TOGGLE
+CreateEvadeToggle(ShooterCanvas, "💀 Aim CU To (Khóa Mục Tiêu)", function(state) AimbotActive = state end)
+CreateEvadeToggle(ShooterCanvas, "👁️ Fov Sex", function(state) FOVActive = state; FOVCircle.Visible = state end)
+CreateEvadeToggle(ShooterCanvas, "✨ ESP Nhìn Xuyên Lồn (Nhìn Xuyên Tường)", function(state) ESPActive = state end)
+CreateEvadeToggle(ShooterCanvas, "🚀 Fly lỏ (Bay Cần Gạt)", function(state) FlyActive = state end)
+CreateEvadeToggle(ShooterCanvas, "🎯 Hit Box Cún (Tăng Tầm Đánh)", function(state) HitboxActive = state end) -- HITBOX TOGGLE
 CreateEvadeSlider(ShooterCanvas, "⭕ Kích Thước Vùng Hitbox", 2, 30, HitboxSize, function(v) HitboxSize = v end)         -- HITBOX SLIDER
 CreateEvadeSlider(ShooterCanvas, "🔴 Bán Kính Vòng FOV", 10, 400, FOVRadius, function(v) FOVRadius = v; FOVCircle.Radius = v end)
 CreateEvadeSlider(ShooterCanvas, "⚡ Tốc Độ Chạy (Speed)", 16, 250, CustomSpeed, function(v) CustomSpeed = v end)
@@ -307,9 +307,9 @@ CreateEvadeToggle(MM2Canvas, "👁️ Bật MM2 ESP (Hiện Rõ Vai Trò)", func
 CreateEvadeToggle(MM2Canvas, "🎯 Auto Pick Up Gun (Tự Nhặt Súng)", function(state) AutoPickGun = state end)
 
 -- KHỞI TẠO TÍNH NĂNG TAB 3: PRISON LIFE
-CreateEvadeToggle(PLCanvas, "🧱 No Clip (Đi Xuyên Tường)", function(state) PLNoClipActive = state end)
-CreateEvadeToggle(PLCanvas, "⚡ Auto Nạp Đạn (Vô Hạn Đạn)", function(state) PLInfAmmoActive = state end)
-CreateEvadeButton(PLCanvas, "🔥 Tự Động Lấy Tất Cả Súng", function()
+CreateEvadeToggle(PLCanvas, "🧱 ĐI Xuyên Map (Đi Xuyên Tường)", function(state) PLNoClipActive = state end)
+CreateEvadeToggle(PLCanvas, "⚡ Auto Gun (Vô Hạn Đạn)", function(state) PLInfAmmoActive = state end)
+CreateEvadeButton(PLCanvas, "🔥 Tự Động Gun", function()
     pcall(function()
         local weapons = {"M4A1", "AK-47", "Remington 870", "M9"}
         for _, weapon in pairs(weapons) do
@@ -461,4 +461,58 @@ RunService.Heartbeat:Connect(function()
                     TargetHRP.Color = Color3.fromRGB(255, 0, 0)
                     TargetHRP.CanCollide = false
                 else
-                    -- Trả về trạ
+                    -- Trả về trạng thái mặc định của Roblox khi tắt tính năng
+                    TargetHRP.Size = Vector3.new(2, 2, 1)
+                    TargetHRP.Transparency = 1
+                    TargetHRP.CanCollide = true
+                end
+            end
+        end
+    end
+
+    -- 5. TÍNH NĂNG TỰ ĐỘNG NHẶT SÚNG MM2 (AUTO PICK UP GUN)
+    if AutoPickGun and HRP then
+        local DroppedGun = workspace:FindFirstChild("GunDrop") or workspace:FindFirstChild("Gun")
+        if DroppedGun and DroppedGun:IsA("BasePart") then
+            HRP.CFrame = DroppedGun.CFrame
+        elseif DroppedGun and DroppedGun:IsA("Model") and DroppedGun.PrimaryPart then
+            HRP.CFrame = DroppedGun:GetPrimaryPartCFrame()
+        end
+    end
+
+    -- 6. TÍNH NĂNG PRISON LIFE: NO CLIP
+    if PLNoClipActive then
+        pcall(function()
+            for _, part in pairs(Char:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+        end)
+    end
+
+    -- 7. TÍNH NĂNG PRISON LIFE: AUTO NẠP ĐẠN / VÔ HẠN ĐẠN
+    if PLInfAmmoActive then
+        pcall(function()
+            local backpack = LocalPlayer:FindFirstChild("Backpack")
+            if backpack then
+                for _, v in pairs(backpack:GetChildren()) do
+                    if v:IsA("Tool") and v:FindFirstChild("GunStates") then
+                        local module = require(v.GunStates)
+                        module.MaxAmmo = math.huge
+                        module.CurrentAmmo = math.huge
+                        module.StoredAmmo = math.huge
+                    end
+                end
+            end
+            for _, v in pairs(Char:GetChildren()) do
+                if v:IsA("Tool") and v:FindFirstChild("GunStates") then
+                    local module = require(v.GunStates)
+                    module.MaxAmmo = math.huge
+                    module.CurrentAmmo = math.huge
+                    module.StoredAmmo = math.huge
+                end
+            end
+        end)
+    end
+end)
