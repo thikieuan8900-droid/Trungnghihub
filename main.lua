@@ -16,9 +16,17 @@ local FOVRadius = 120
 local CustomSpeed = 16 
 local FlySpeed = 50
 
+-- BIẾN TRẠNG THÁI TÍNH NĂNG HITBOX (MỚI THÊM)
+local HitboxActive = false
+local HitboxSize = 12
+
 -- BIẾN TRẠNG THÁI TÍNH NĂNG MM2
 local MM2ESPActive = false
 local AutoPickGun = false
+
+-- BIẾN TRẠNG THÁI TÍNH NĂNG PRISON LIFE
+local PLNoClipActive = false
+local PLInfAmmoActive = false
 
 -- 1. VÒNG TRÒN FOV
 local FOVCircle = Drawing.new("Circle")
@@ -81,6 +89,7 @@ TabSpacer.Size = UDim2.new(1, 0, 0, 40)
 TabSpacer.BackgroundTransparency = 1
 TabSpacer.LayoutOrder = 0
 
+-- NÚT CÁC TAB
 local TabBtnShooter = Instance.new("TextButton", SideBar)
 TabBtnShooter.Size = UDim2.new(1, -16, 0, 32)
 TabBtnShooter.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
@@ -101,13 +110,23 @@ TabBtnMM2.TextSize = 13
 TabBtnMM2.LayoutOrder = 2
 Instance.new("UICorner", TabBtnMM2).CornerRadius = UDim.new(0, 6)
 
+local TabBtnPL = Instance.new("TextButton", SideBar)
+TabBtnPL.Size = UDim2.new(1, -16, 0, 32)
+TabBtnPL.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+TabBtnPL.Text = "🔒 Prison Life"
+TabBtnPL.TextColor3 = Color3.fromRGB(180, 180, 180)
+TabBtnPL.Font = Enum.Font.SourceSansBold
+TabBtnPL.TextSize = 13
+TabBtnPL.LayoutOrder = 3
+Instance.new("UICorner", TabBtnPL).CornerRadius = UDim.new(0, 6)
+
 -- [CANVASES Nội Dung Phân Tách]
 local ShooterCanvas = Instance.new("ScrollingFrame", MainFrame)
 ShooterCanvas.Size = UDim2.new(1, -145, 1, -20)
 ShooterCanvas.Position = UDim2.new(0, 140, 0, 10)
 ShooterCanvas.BackgroundTransparency = 1
 ShooterCanvas.BorderSizePixel = 0
-ShooterCanvas.CanvasSize = UDim2.new(0, 0, 1.4, 0) 
+ShooterCanvas.CanvasSize = UDim2.new(0, 0, 1.8, 0) -- Tăng canvas để cuộn vừa tính năng hitbox mới
 ShooterCanvas.ScrollBarThickness = 2
 local UIList1 = Instance.new("UIListLayout", ShooterCanvas)
 UIList1.SortOrder = Enum.SortOrder.LayoutOrder
@@ -125,17 +144,38 @@ local UIList2 = Instance.new("UIListLayout", MM2Canvas)
 UIList2.SortOrder = Enum.SortOrder.LayoutOrder
 UIList2.Padding = UDim.new(0, 8)
 
+local PLCanvas = Instance.new("ScrollingFrame", MainFrame)
+PLCanvas.Size = UDim2.new(1, -145, 1, -20)
+PLCanvas.Position = UDim2.new(0, 140, 0, 10)
+PLCanvas.BackgroundTransparency = 1
+PLCanvas.BorderSizePixel = 0
+PLCanvas.CanvasSize = UDim2.new(0, 0, 1.4, 0)
+PLCanvas.ScrollBarThickness = 2
+PLCanvas.Visible = false
+local UIList3 = Instance.new("UIListLayout", PLCanvas)
+UIList3.SortOrder = Enum.SortOrder.LayoutOrder
+UIList3.Padding = UDim.new(0, 8)
+
 -- Sự kiện Đổi Tab
 TabBtnShooter.MouseButton1Click:Connect(function()
-    ShooterCanvas.Visible = true; MM2Canvas.Visible = false
+    ShooterCanvas.Visible = true; MM2Canvas.Visible = false; PLCanvas.Visible = false
     TabBtnShooter.BackgroundColor3 = Color3.fromRGB(35, 35, 35); TabBtnShooter.TextColor3 = Color3.fromRGB(255, 255, 255)
     TabBtnMM2.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnMM2.TextColor3 = Color3.fromRGB(180, 180, 180)
+    TabBtnPL.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnPL.TextColor3 = Color3.fromRGB(180, 180, 180)
 end)
 
 TabBtnMM2.MouseButton1Click:Connect(function()
-    ShooterCanvas.Visible = false; MM2Canvas.Visible = true
+    ShooterCanvas.Visible = false; MM2Canvas.Visible = true; PLCanvas.Visible = false
     TabBtnMM2.BackgroundColor3 = Color3.fromRGB(35, 35, 35); TabBtnMM2.TextColor3 = Color3.fromRGB(255, 255, 255)
     TabBtnShooter.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnShooter.TextColor3 = Color3.fromRGB(180, 180, 180)
+    TabBtnPL.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnPL.TextColor3 = Color3.fromRGB(180, 180, 180)
+end)
+
+TabBtnPL.MouseButton1Click:Connect(function()
+    ShooterCanvas.Visible = false; MM2Canvas.Visible = false; PLCanvas.Visible = true
+    TabBtnPL.BackgroundColor3 = Color3.fromRGB(35, 35, 35); TabBtnPL.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TabBtnShooter.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnShooter.TextColor3 = Color3.fromRGB(180, 180, 180)
+    TabBtnMM2.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnMM2.TextColor3 = Color3.fromRGB(180, 180, 180)
 end)
 
 -- Hàm tạo Nút Bật/Tắt (Toggle)
@@ -173,6 +213,29 @@ local function CreateEvadeToggle(parentCanvas, text, callback)
         Switch.BackgroundColor3 = Active and Color3.fromRGB(200, 0, 0) or Color3.fromRGB(40, 40, 40)
         Indicator.Position = Active and UDim2.new(1, -15, 0.5, -6) or UDim2.new(0, 3, 0.5, -6)
     end)
+end
+
+-- Hàm tạo Nút Bấm Thực Thi Thường (Button)
+local function CreateEvadeButton(parentCanvas, text, callback)
+    local ButtonFrame = Instance.new("Frame", parentCanvas)
+    ButtonFrame.Size = UDim2.new(1, -10, 0, 35)
+    ButtonFrame.BackgroundTransparency = 1
+
+    local Btn = Instance.new("TextButton", ButtonFrame)
+    Btn.Size = UDim2.new(1, 0, 1, 0)
+    Btn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    Btn.Text = text
+    Btn.TextColor3 = Color3.fromRGB(230, 230, 230)
+    Btn.Font = Enum.Font.SourceSansBold
+    Btn.TextSize = 13
+    
+    local Corner = Instance.new("UICorner", Btn)
+    Corner.CornerRadius = UDim.new(0, 6)
+    local Stroke = Instance.new("UIStroke", Btn)
+    Stroke.Color = Color3.fromRGB(60, 60, 60)
+    Stroke.Thickness = 1
+
+    Btn.MouseButton1Click:Connect(callback)
 end
 
 -- Hàm tạo Thanh Trượt Kéo (Slider)
@@ -233,13 +296,34 @@ CreateEvadeToggle(ShooterCanvas, "💀 Kích Hoạt Aimbot (Khóa Mục Tiêu)",
 CreateEvadeToggle(ShooterCanvas, "👁️ Hiển Thị Vòng FOV", function(state) FOVActive = state; FOVCircle.Visible = state end)
 CreateEvadeToggle(ShooterCanvas, "✨ ESP Chams (Nhìn Xuyên Tường)", function(state) ESPActive = state end)
 CreateEvadeToggle(ShooterCanvas, "🚀 Kích Hoạt Fly Hack (Bay Cần Gạt)", function(state) FlyActive = state end)
+CreateEvadeToggle(ShooterCanvas, "🎯 Kích Hoạt Hitbox (Tăng Tầm Đánh)", function(state) HitboxActive = state end) -- HITBOX TOGGLE
+CreateEvadeSlider(ShooterCanvas, "⭕ Kích Thước Vùng Hitbox", 2, 30, HitboxSize, function(v) HitboxSize = v end)         -- HITBOX SLIDER
 CreateEvadeSlider(ShooterCanvas, "🔴 Bán Kính Vòng FOV", 10, 400, FOVRadius, function(v) FOVRadius = v; FOVCircle.Radius = v end)
 CreateEvadeSlider(ShooterCanvas, "⚡ Tốc Độ Chạy (Speed)", 16, 250, CustomSpeed, function(v) CustomSpeed = v end)
 CreateEvadeSlider(ShooterCanvas, "✈️ Tốc Độ Bay (Fly Speed)", 20, 200, FlySpeed, function(v) FlySpeed = v end)
 
--- KHỞI TẠO TÍNH NĂNG TAB 2: MM2 MAIN (MỚI THÊM)
+-- KHỞI TẠO TÍNH NĂNG TAB 2: MM2 MAIN
 CreateEvadeToggle(MM2Canvas, "👁️ Bật MM2 ESP (Hiện Rõ Vai Trò)", function(state) MM2ESPActive = state end)
 CreateEvadeToggle(MM2Canvas, "🎯 Auto Pick Up Gun (Tự Nhặt Súng)", function(state) AutoPickGun = state end)
+
+-- KHỞI TẠO TÍNH NĂNG TAB 3: PRISON LIFE
+CreateEvadeToggle(PLCanvas, "🧱 No Clip (Đi Xuyên Tường)", function(state) PLNoClipActive = state end)
+CreateEvadeToggle(PLCanvas, "⚡ Auto Nạp Đạn (Vô Hạn Đạn)", function(state) PLInfAmmoActive = state end)
+CreateEvadeButton(PLCanvas, "🔥 Tự Động Lấy Tất Cả Súng", function()
+    pcall(function()
+        local weapons = {"M4A1", "AK-47", "Remington 870", "M9"}
+        for _, weapon in pairs(weapons) do
+            local workspaceWeapon = game.Workspace.Giver:FindFirstChild(weapon)
+            if workspaceWeapon then
+                local item = workspaceWeapon.ITEM
+                local oldCFrame = item.CFrame
+                item.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame
+                task.wait(0.1)
+                item.CFrame = oldCFrame
+            end
+        end
+    end)
+end)
 
 -- NÚT ĐÓNG / MỞ MENU
 local CloseBtn = Instance.new("TextButton", MainFrame)
@@ -341,11 +425,11 @@ RunService.Heartbeat:Connect(function()
         end
     end
     
-    -- 4. ESP Chams (Bình thường & MM2 Phân loại màu)
+    -- 4. ESP Chams & HỆ THỐNG XỬ LÝ HITBOX
     for _, p in pairs(Players:GetPlayers()) do
         if p ~= LocalPlayer and p.Character then
+            -- [XỬ LÝ CHAMS ESP]
             local Highlight = p.Character:FindFirstChild("ESPHighlight")
-            
             if ESPActive or MM2ESPActive then
                 if not Highlight then
                     Highlight = Instance.new("Highlight")
@@ -356,33 +440,79 @@ RunService.Heartbeat:Connect(function()
                     Highlight.Parent = p.Character
                 end
                 
-                -- Phân màu nâng cao nếu bật chế độ MM2 ESP
                 if MM2ESPActive then
                     local role = GetMM2Role(p)
-                    if role == "Murderer" then
-                        Highlight.FillColor = Color3.fromRGB(255, 0, 0) -- Màu Đỏ cho Sát thủ
-                    elseif role == "Sheriff" then
-                        Highlight.FillColor = Color3.fromRGB(0, 0, 255) -- Màu Xanh Dương cho Cảnh sát
-                    else
-                        Highlight.FillColor = Color3.fromRGB(0, 255, 0) -- Màu Xanh Lá cho Dân thường
-                    end
+                    if role == "Murderer" then Highlight.FillColor = Color3.fromRGB(255, 0, 0)
+                    elseif role == "Sheriff" then Highlight.FillColor = Color3.fromRGB(0, 0, 255)
+                    else Highlight.FillColor = Color3.fromRGB(0, 255, 0) end
                 else
-                    Highlight.FillColor = Color3.fromRGB(255, 0, 0) -- Mặc định đỏ khi chạy map thường
+                    Highlight.FillColor = Color3.fromRGB(255, 0, 0)
                 end
             else
                 if Highlight then Highlight:Destroy() end
+            end
+
+            -- [XỬ LÝ HITBOX MỚI]
+            local TargetHRP = p.Character:FindFirstChild("HumanoidRootPart")
+            if TargetHRP then
+                if HitboxActive then
+                    TargetHRP.Size = Vector3.new(HitboxSize, HitboxSize, HitboxSize)
+                    TargetHRP.Transparency = 0.65 -- Làm mờ để thấy rõ khối va chạm màu đỏ
+                    TargetHRP.Color = Color3.fromRGB(255, 0, 0)
+                    TargetHRP.CanCollide = false
+                else
+                    -- Trả về trạng thái mặc định của Roblox khi tắt tính năng
+                    TargetHRP.Size = Vector3.new(2, 2, 1)
+                    TargetHRP.Transparency = 1
+                    TargetHRP.CanCollide = true
+                end
             end
         end
     end
 
     -- 5. TÍNH NĂNG TỰ ĐỘNG NHẶT SÚNG MM2 (AUTO PICK UP GUN)
     if AutoPickGun and HRP then
-        -- Khẩu súng rơi ra khi Cảnh sát chết trong MM2 thường nằm trực tiếp ở Workspace dưới dạng Model hoặc Part tên "GunDrop"
         local DroppedGun = workspace:FindFirstChild("GunDrop") or workspace:FindFirstChild("Gun")
         if DroppedGun and DroppedGun:IsA("BasePart") then
             HRP.CFrame = DroppedGun.CFrame
         elseif DroppedGun and DroppedGun:IsA("Model") and DroppedGun.PrimaryPart then
             HRP.CFrame = DroppedGun:GetPrimaryPartCFrame()
         end
+    end
+
+    -- 6. TÍNH NĂNG PRISON LIFE: NO CLIP
+    if PLNoClipActive then
+        pcall(function()
+            for _, part in pairs(Char:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+        end)
+    end
+
+    -- 7. TÍNH NĂNG PRISON LIFE: AUTO NẠP ĐẠN / VÔ HẠN ĐẠN
+    if PLInfAmmoActive then
+        pcall(function()
+            local backpack = LocalPlayer:FindFirstChild("Backpack")
+            if backpack then
+                for _, v in pairs(backpack:GetChildren()) do
+                    if v:IsA("Tool") and v:FindFirstChild("GunStates") then
+                        local module = require(v.GunStates)
+                        module.MaxAmmo = math.huge
+                        module.CurrentAmmo = math.huge
+                        module.StoredAmmo = math.huge
+                    end
+                end
+            end
+            for _, v in pairs(Char:GetChildren()) do
+                if v:IsA("Tool") and v:FindFirstChild("GunStates") then
+                    local module = require(v.GunStates)
+                    module.MaxAmmo = math.huge
+                    module.CurrentAmmo = math.huge
+                    module.StoredAmmo = math.huge
+                end
+            end
+        end)
     end
 end)
