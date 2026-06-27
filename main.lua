@@ -16,6 +16,10 @@ local FOVRadius = 120
 local CustomSpeed = 16 
 local FlySpeed = 50
 
+-- BIẾN TRẠNG THÁI TÍNH NĂNG FSK (MỚI THÊM)
+local FSKInfEnergyActive = false
+local FSKGodModeActive = false
+
 -- BIẾN TRẠNG THÁI TÍNH NĂNG HITBOX (MỚI THÊM)
 local HitboxActive = false
 local HitboxSize = 12
@@ -120,6 +124,16 @@ TabBtnPL.TextSize = 12
 TabBtnPL.LayoutOrder = 3
 Instance.new("UICorner", TabBtnPL).CornerRadius = UDim.new(0, 6)
 
+local TabBtnFSK = Instance.new("TextButton", SideBar)
+TabBtnFSK.Size = UDim2.new(1, -16, 0, 32)
+TabBtnFSK.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+TabBtnFSK.Text = "🛡️ TrungNghi FSK"
+TabBtnFSK.TextColor3 = Color3.fromRGB(180, 180, 180)
+TabBtnFSK.Font = Enum.Font.SourceSansBold
+TabBtnFSK.TextSize = 12
+TabBtnFSK.LayoutOrder = 4
+Instance.new("UICorner", TabBtnFSK).CornerRadius = UDim.new(0, 6)
+
 -- [CANVASES Nội Dung Phân Tách]
 local ShooterCanvas = Instance.new("ScrollingFrame", MainFrame)
 ShooterCanvas.Size = UDim2.new(1, -145, 1, -20)
@@ -156,6 +170,18 @@ local UIList3 = Instance.new("UIListLayout", PLCanvas)
 UIList3.SortOrder = Enum.SortOrder.LayoutOrder
 UIList3.Padding = UDim.new(0, 8)
 
+local FSKCanvas = Instance.new("ScrollingFrame", MainFrame)
+FSKCanvas.Size = UDim2.new(1, -145, 1, -20)
+FSKCanvas.Position = UDim2.new(0, 140, 0, 10)
+FSKCanvas.BackgroundTransparency = 1
+FSKCanvas.BorderSizePixel = 0
+FSKCanvas.CanvasSize = UDim2.new(0, 0, 1.4, 0)
+FSKCanvas.ScrollBarThickness = 2
+FSKCanvas.Visible = false
+local UIList4 = Instance.new("UIListLayout", FSKCanvas)
+UIList4.SortOrder = Enum.SortOrder.LayoutOrder
+UIList4.Padding = UDim.new(0, 8)
+
 -- Sự kiện Đổi Tab
 TabBtnShooter.MouseButton1Click:Connect(function()
     ShooterCanvas.Visible = true; MM2Canvas.Visible = false; PLCanvas.Visible = false
@@ -176,6 +202,20 @@ TabBtnPL.MouseButton1Click:Connect(function()
     TabBtnPL.BackgroundColor3 = Color3.fromRGB(35, 35, 35); TabBtnPL.TextColor3 = Color3.fromRGB(255, 255, 255)
     TabBtnShooter.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnShooter.TextColor3 = Color3.fromRGB(180, 180, 180)
     TabBtnMM2.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnMM2.TextColor3 = Color3.fromRGB(180, 180, 180)
+end)
+
+TabBtnFSK.MouseButton1Click:Connect(function()
+    ShooterCanvas.Visible = false
+    MM2Canvas.Visible = false
+    PLCanvas.Visible = false
+    FSKCanvas.Visible = true
+    
+    TabBtnFSK.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    TabBtnFSK.TextColor3 = Color3.fromRGB(255, 255, 255)
+    
+    TabBtnShooter.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnShooter.TextColor3 = Color3.fromRGB(180, 180, 180)
+    TabBtnMM2.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnMM2.TextColor3 = Color3.fromRGB(180, 180, 180)
+    TabBtnPL.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnPL.TextColor3 = Color3.fromRGB(180, 180, 180)
 end)
 
 -- Hàm tạo Nút Bật/Tắt (Toggle)
@@ -324,6 +364,10 @@ CreateEvadeButton(PLCanvas, "🔥 Méo Tác Dụng", function()
         end
     end)
 end)
+
+-- KHỞI TẠO TÍNH NĂNG TAB 4: TRUNGNGHI FSK
+CreateEvadeToggle(FSKCanvas, "🔋 Năng Lượng Sex", function(state) FSKInfEnergyActive = state end)
+CreateEvadeToggle(FSKCanvas, "❤️ Trâu Bò Ko Chết (God Mode)", function(state) FSKGodModeActive = state end)
 
 -- NÚT ĐÓNG / MỞ MENU
 local CloseBtn = Instance.new("TextButton", MainFrame)
@@ -531,3 +575,29 @@ if PLNoClipActive then
         end)
     end
 end)
+
+    -- 8. HỆ THỐNG TÍNH NĂNG FSK MỚI
+    if FSKInfEnergyActive then
+        pcall(function()
+            -- Kiểm tra và khóa chỉ số Stamina/Energy trong Character
+            if LocalPlayer.Character:FindFirstChild("Stamina") then
+                LocalPlayer.Character.Stamina.Value = 100 -- Hoặc mức tối đa của game
+            elseif LocalPlayer.Character:FindFirstChild("Energy") then
+                LocalPlayer.Character.Energy.Value = 100
+            end
+            
+            -- Kiểm tra trong PlayerGui (nếu game hiển thị thanh năng lượng trên màn hình UI)
+            if LocalPlayer.PlayerGui:FindFirstChild("StaminaUI") then
+                -- Gán giá trị tĩnh nếu cần thiết
+            end
+        end)
+    end
+    
+    if FSKGodModeActive then
+        pcall(function()
+            if Char:FindFirstChildOfClass("Humanoid") then
+                Char:FindFirstChildOfClass("Humanoid").Health = 999999
+                Char:FindFirstChildOfClass("Humanoid").MaxHealth = 999999
+            end
+        end)
+end
