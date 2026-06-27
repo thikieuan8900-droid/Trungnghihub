@@ -44,7 +44,7 @@ end
 -- 2. TẠO GIAO DIỆN PHÂN TAB CHUYÊN NGHIỆP (EVADE STYLE)
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = PlayerGui
-ScreenGui.Name = "TrungNghiEvadeStyleMenu"
+ScreenGui.Name = "TrungNghiScrip666"
 ScreenGui.ResetOnSpawn = false
 
 local MainFrame = Instance.new("Frame")
@@ -93,30 +93,30 @@ TabSpacer.LayoutOrder = 0
 local TabBtnShooter = Instance.new("TextButton", SideBar)
 TabBtnShooter.Size = UDim2.new(1, -16, 0, 32)
 TabBtnShooter.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-TabBtnShooter.Text = "🔫 Shooter Main"
+TabBtnShooter.Text = "🔫 TrungNghi Gun"
 TabBtnShooter.TextColor3 = Color3.fromRGB(255, 255, 255)
 TabBtnShooter.Font = Enum.Font.SourceSansBold
-TabBtnShooter.TextSize = 13
+TabBtnShooter.TextSize = 12
 TabBtnShooter.LayoutOrder = 1
 Instance.new("UICorner", TabBtnShooter).CornerRadius = UDim.new(0, 6)
 
 local TabBtnMM2 = Instance.new("TextButton", SideBar)
 TabBtnMM2.Size = UDim2.new(1, -16, 0, 32)
 TabBtnMM2.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
-TabBtnMM2.Text = "🕵️ MM2 Main"
+TabBtnMM2.Text = "🕵️ TrungNghi MM2"
 TabBtnMM2.TextColor3 = Color3.fromRGB(180, 180, 180)
 TabBtnMM2.Font = Enum.Font.SourceSansBold
-TabBtnMM2.TextSize = 13
+TabBtnMM2.TextSize = 12
 TabBtnMM2.LayoutOrder = 2
 Instance.new("UICorner", TabBtnMM2).CornerRadius = UDim.new(0, 6)
 
 local TabBtnPL = Instance.new("TextButton", SideBar)
 TabBtnPL.Size = UDim2.new(1, -16, 0, 32)
 TabBtnPL.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
-TabBtnPL.Text = "🔒 Prison Life"
+TabBtnPL.Text = "🔒 TrungNghi Pri"
 TabBtnPL.TextColor3 = Color3.fromRGB(180, 180, 180)
 TabBtnPL.Font = Enum.Font.SourceSansBold
-TabBtnPL.TextSize = 13
+TabBtnPL.TextSize = 12
 TabBtnPL.LayoutOrder = 3
 Instance.new("UICorner", TabBtnPL).CornerRadius = UDim.new(0, 6)
 
@@ -292,24 +292,24 @@ local function CreateEvadeSlider(parentCanvas, titleText, min, max, default, cal
 end
 
 -- KHỞI TẠO TÍNH NĂNG TAB 1: SHOOTER MAIN
-CreateEvadeToggle(ShooterCanvas, "💀 Kích Hoạt Aimbot (Khóa Mục Tiêu)", function(state) AimbotActive = state end)
-CreateEvadeToggle(ShooterCanvas, "👁️ Hiển Thị Vòng FOV", function(state) FOVActive = state; FOVCircle.Visible = state end)
-CreateEvadeToggle(ShooterCanvas, "✨ ESP Chams (Nhìn Xuyên Tường)", function(state) ESPActive = state end)
-CreateEvadeToggle(ShooterCanvas, "🚀 Kích Hoạt Fly Hack (Bay Cần Gạt)", function(state) FlyActive = state end)
-CreateEvadeToggle(ShooterCanvas, "🎯 Kích Hoạt Hitbox (Tăng Tầm Đánh)", function(state) HitboxActive = state end) -- HITBOX TOGGLE
+CreateEvadeToggle(ShooterCanvas, "💀 Aim Cặc (Khóa Mục Tiêu)", function(state) AimbotActive = state end)
+CreateEvadeToggle(ShooterCanvas, "👁️ Fov Cặc To (Vòng Tròn Sex) ", function(state) FOVActive = state; FOVCircle.Visible = state end)
+CreateEvadeToggle(ShooterCanvas, "✨ Esp Cún Gà (Nhìn Xuyên Dái)", function(state) ESPActive = state end)
+CreateEvadeToggle(ShooterCanvas, "🚀 Bay Rớt Chim (Trung Nghi Cu To)", function(state) FlyActive = state end)
+CreateEvadeToggle(ShooterCanvas, "🎯 Hit Box (Tăng Tầm Cu)", function(state) HitboxActive = state end) -- HITBOX TOGGLE
 CreateEvadeSlider(ShooterCanvas, "⭕ Kích Thước Vùng Hitbox", 2, 30, HitboxSize, function(v) HitboxSize = v end)         -- HITBOX SLIDER
 CreateEvadeSlider(ShooterCanvas, "🔴 Bán Kính Vòng FOV", 10, 400, FOVRadius, function(v) FOVRadius = v; FOVCircle.Radius = v end)
 CreateEvadeSlider(ShooterCanvas, "⚡ Tốc Độ Chạy (Speed)", 16, 250, CustomSpeed, function(v) CustomSpeed = v end)
 CreateEvadeSlider(ShooterCanvas, "✈️ Tốc Độ Bay (Fly Speed)", 20, 200, FlySpeed, function(v) FlySpeed = v end)
 
 -- KHỞI TẠO TÍNH NĂNG TAB 2: MM2 MAIN
-CreateEvadeToggle(MM2Canvas, "👁️ Bật MM2 ESP (Hiện Rõ Vai Trò)", function(state) MM2ESPActive = state end)
-CreateEvadeToggle(MM2Canvas, "🎯 Auto Pick Up Gun (Tự Nhặt Súng)", function(state) AutoPickGun = state end)
+CreateEvadeToggle(MM2Canvas, "👁️ Bật Lên Thấy Cu (Hiện Rõ Thằng Ngu)", function(state) MM2ESPActive = state end)
+CreateEvadeToggle(MM2Canvas, "🎯 Đéo Có Tác Dụng (Tự Nhặt Súng)", function(state) AutoPickGun = state end)
 
 -- KHỞI TẠO TÍNH NĂNG TAB 3: PRISON LIFE
-CreateEvadeToggle(PLCanvas, "🧱 No Clip (Đi Xuyên Tường)", function(state) PLNoClipActive = state end)
-CreateEvadeToggle(PLCanvas, "⚡ Auto Nạp Đạn (Vô Hạn Đạn)", function(state) PLInfAmmoActive = state end)
-CreateEvadeButton(PLCanvas, "🔥 Tự Động Lấy Tất Cả Súng", function()
+CreateEvadeToggle(PLCanvas, "🧱 Đi Xuyên Cu (Đi Xuyên Tường)", function(state) PLNoClipActive = state end)
+CreateEvadeToggle(PLCanvas, "⚡ Auto Méo Tác Dụng (Vô Hạn Đạn)", function(state) PLInfAmmoActive = state end)
+CreateEvadeButton(PLCanvas, "🔥 Méo Tác Dụng", function()
     pcall(function()
         local weapons = {"M4A1", "AK-47", "Remington 870", "M9"}
         for _, weapon in pairs(weapons) do
