@@ -561,20 +561,22 @@ if InfiniteStamina then
     pcall(function()
         local Char = LocalPlayer.Character
         if Char and Char:FindFirstChild("Stamina") then
-            Char.Stamina.Value = Char.Stamina.MaxValue -- Hoặc 100 tùy theo game
+            Char.Stamina.Value = 1000 -- Hoặc 100 tùy theo game
         end
     end)
 end
 
-if InfiniteHealth then
-    pcall(function()
-        local Char = LocalPlayer.Character
-        if Char then
-            local Hum = Char:FindFirstChildOfClass("Humanoid")
-            if Hum then
-                Hum.Health = 100000000
+    if InfiniteHealth then
+        pcall(function()
+            local Char = LocalPlayer.Character
+            if Char then
+                local Hum = Char:FindFirstChildOfClass("Humanoid")
+                if Hum then
+                    -- Cách 1: Ép máu về cực cao (thay vì MaxHealth)
+                    Hum.Health = 999999
+                    Hum.MaxHealth = 999999
+                end
             end
-        end
-    end)
-end
+        end)
+    end
     end)
