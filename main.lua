@@ -73,6 +73,7 @@ local SideBar = Instance.new("ScrollingFrame", MainFrame)
 SideBar.Size = UDim2.new(0, 130, 1, 0)
 SideBar.BackgroundColor3 = Color3.fromRGB(13, 13, 13) 
 SideBar.BorderSizePixel = 0
+SideBar.ScrollBarThickness = 1 -- Chỉnh con số này để tăng/giảm độ dày
 Instance.new("UICorner", SideBar).CornerRadius = UDim.new(0, 10)
 
 local LogoLabel = Instance.new("TextLabel", SideBar)
