@@ -13,7 +13,7 @@ local FlyActive = false
 local ESPActive = false
 
 local FOVRadius = 120 
-local CustomSpeed = 16 
+local CustomSpeed = 22 
 local FlySpeed = 50
 
 -- BIẾN TRẠNG THÁI TÍNH NĂNG HITBOX (MỚI THÊM)
@@ -27,6 +27,10 @@ local AutoPickGun = false
 -- BIẾN TRẠNG THÁI TÍNH NĂNG PRISON LIFE
 local PLNoClipActive = false
 local PLInfAmmoActive = false
+
+-- BIẾN TRẠNG THÁI TÍNH NĂNG TAB 4 (FORSAKEN TN)
+local InfiniteStamina = false
+local InfiniteHealth = false
 
 -- 1. VÒNG TRÒN FOV
 local FOVCircle = Drawing.new("Circle")
@@ -120,6 +124,16 @@ TabBtnPL.TextSize = 13
 TabBtnPL.LayoutOrder = 3
 Instance.new("UICorner", TabBtnPL).CornerRadius = UDim.new(0, 6)
 
+local TabBtnFsk = Instance.new("TextButton", SideBar)
+TabBtnFsk.Size = UDim2.new(1, -16, 0, 32)
+TabBtnFsk.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+TabBtnFsk.Text = "🔫 TrungnghiFsk"
+TabBtnFsk.TextColor3 = Color3.fromRGB(180, 180, 180)
+TabBtnFsk.Font = Enum.Font.SourceSansBold
+TabBtnFsk.TextSize = 13
+TabBtnFsk.LayoutOrder = 4
+Instance.new("UICorner", TabBtnFsk).CornerRadius = UDim.new(0, 6)
+
 -- [CANVASES Nội Dung Phân Tách]
 local ShooterCanvas = Instance.new("ScrollingFrame", MainFrame)
 ShooterCanvas.Size = UDim2.new(1, -145, 1, -20)
@@ -156,12 +170,25 @@ local UIList3 = Instance.new("UIListLayout", PLCanvas)
 UIList3.SortOrder = Enum.SortOrder.LayoutOrder
 UIList3.Padding = UDim.new(0, 8)
 
+local FskCanvas = Instance.new("ScrollingFrame", MainFrame)
+FskCanvas.Size = UDim2.new(1, -145, 1, -20)
+FskCanvas.Position = UDim2.new(0, 140, 0, 10)
+FakCanvas.BackgroundTransparency = 1
+FskCanvas.BorderSizePixel = 0
+FskCanvas.CanvasSize = UDim2.new(0, 0, 1.4, 0) 
+FskCanvas.ScrollBarThickness = 2
+FskCanvas.Visible = false
+local UIList4 = Instance.new("UIListLayout", FskCanvas)
+UIList4.SortOrder = Enum.SortOrder.LayoutOrder
+UIList4.Padding = UDim.new(0, 8)
+
 -- Sự kiện Đổi Tab
 TabBtnShooter.MouseButton1Click:Connect(function()
     ShooterCanvas.Visible = true; MM2Canvas.Visible = false; PLCanvas.Visible = false
     TabBtnShooter.BackgroundColor3 = Color3.fromRGB(35, 35, 35); TabBtnShooter.TextColor3 = Color3.fromRGB(255, 255, 255)
     TabBtnMM2.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnMM2.TextColor3 = Color3.fromRGB(180, 180, 180)
     TabBtnPL.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnPL.TextColor3 = Color3.fromRGB(180, 180, 180)
+    TabBtnFsk.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnFsk.Textcolor3 = Color3.fromRGB(180, 180, 180) 
 end)
 
 TabBtnMM2.MouseButton1Click:Connect(function()
@@ -169,6 +196,7 @@ TabBtnMM2.MouseButton1Click:Connect(function()
     TabBtnMM2.BackgroundColor3 = Color3.fromRGB(35, 35, 35); TabBtnMM2.TextColor3 = Color3.fromRGB(255, 255, 255)
     TabBtnShooter.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnShooter.TextColor3 = Color3.fromRGB(180, 180, 180)
     TabBtnPL.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnPL.TextColor3 = Color3.fromRGB(180, 180, 180)
+    TabBtnFsk.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnFsk.Textcolor3 = Color3.fromRGB(180, 180, 180) 
 end)
 
 TabBtnPL.MouseButton1Click:Connect(function()
@@ -176,6 +204,15 @@ TabBtnPL.MouseButton1Click:Connect(function()
     TabBtnPL.BackgroundColor3 = Color3.fromRGB(35, 35, 35); TabBtnPL.TextColor3 = Color3.fromRGB(255, 255, 255)
     TabBtnShooter.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnShooter.TextColor3 = Color3.fromRGB(180, 180, 180)
     TabBtnMM2.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnMM2.TextColor3 = Color3.fromRGB(180, 180, 180)
+    TabBtnFsk.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnFsk.Textcolor3 = Color3.fromRGB(180, 180, 180)    
+end)
+
+TabBtnFsk.MouseButton1Click:Connect(function()
+    ShooterCanvas.Visible = false; MM2Canvas.Visible = false; PLCanvas.Visible = false
+    TabBtnShooter.BackgroundColor3 = Color3.fromRGB(35, 35, 35); TabBtnShooter.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TabBtnMM2.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnMM2.TextColor3 = Color3.fromRGB(180, 180, 180)
+    TabBtnPL.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnPL.TextColor3 = Color3.fromRGB(180, 180, 180)
+    TabBtnFsk.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnFsk.Textcolor3 = Color3.fromRGB(180, 180, 180) 
 end)
 
 -- Hàm tạo Nút Bật/Tắt (Toggle)
@@ -291,6 +328,7 @@ local function CreateEvadeSlider(parentCanvas, titleText, min, max, default, cal
     end)
 end
 
+
 -- KHỞI TẠO TÍNH NĂNG TAB 1: SHOOTER MAIN
 CreateEvadeToggle(ShooterCanvas, "💀 Aim CU To (Khóa Mục Tiêu)", function(state) AimbotActive = state end)
 CreateEvadeToggle(ShooterCanvas, "👁️ Fov Sex", function(state) FOVActive = state; FOVCircle.Visible = state end)
@@ -324,6 +362,10 @@ CreateEvadeButton(PLCanvas, "🔥 Tự Động Gun", function()
         end
     end)
 end)
+
+-- KHỞI TẠO TÍNH NĂNG TAB 4: FORSAKEN TN
+CreateEvadeToggle(ForsakenCanvas, "🔋 Đéo biết mệt (Infinite Staimina)", function(state) InfiniteStamina = state end)
+CreateEvadeToggle(ForsakenCanvas, "❤️ Đéo biết chết (Bất Tử - God Mode)", function(state) InfiniteHealth = state end)
 
 -- NÚT ĐÓNG / MỞ MENU
 local CloseBtn = Instance.new("TextButton", MainFrame)
