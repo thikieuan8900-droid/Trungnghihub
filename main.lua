@@ -211,10 +211,10 @@ end)
 
 TabBtnFsk.MouseButton1Click:Connect(function()
     ShooterCanvas.Visible = false; MM2Canvas.Visible = false; PLCanvas.Visible = false; FskCanvas.Visible = true
-    TabBtnShooter.BackgroundColor3 = Color3.fromRGB(35, 35, 35); TabBtnShooter.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TabBtnFsk.BackgroundColor3 = Color3.fromRGB(35, 35, 35); TabBtnShooter.TextColor3 = Color3.fromRGB(255, 255, 255)
     TabBtnMM2.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnMM2.TextColor3 = Color3.fromRGB(180, 180, 180)
     TabBtnPL.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnPL.TextColor3 = Color3.fromRGB(180, 180, 180)
-    TabBtnFsk.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnFsk.TextColor3 = Color3.fromRGB(180, 180, 180) 
+    TabBtnShooter.BackgroundColor3 = Color3.fromRGB(22, 22, 22); TabBtnFsk.TextColor3 = Color3.fromRGB(180, 180, 180) 
 end)
 
 -- Hàm tạo Nút Bật/Tắt (Toggle)
