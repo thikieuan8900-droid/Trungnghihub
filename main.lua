@@ -556,24 +556,25 @@ RunService.Heartbeat:Connect(function()
                 end
             end
         end)
-    end     -- 8. TÍNH NĂNG FORSAKEN TN: VÔ HẠN NĂNG LƯỢNG
-    if InfiniteStamina then
-        pcall(function()
-            if Char:FindFirstChild("Stamina") then
-                Char.Stamina.Value = math.huge 
-            end
-        end)
-    end
+    end -- Đặt đoạn này BÊN TRONG hàm RunService.Heartbeat
+if InfiniteStamina then
+    pcall(function()
+        local Char = LocalPlayer.Character
+        if Char and Char:FindFirstChild("Stamina") then
+            Char.Stamina.Value = Char.Stamina.MaxValue -- Hoặc 100 tùy theo game
+        end
+    end)
+end
 
-    -- 9. TÍNH NĂNG FORSAKEN TN: BẤT TỬ
-    if InfiniteHealth then
-        pcall(function()
+if InfiniteHealth then
+    pcall(function()
+        local Char = LocalPlayer.Character
+        if Char then
+            local Hum = Char:FindFirstChildOfClass("Humanoid")
             if Hum then
-                Hum.MaxHealth = math.huge
-                Hum.Health = math.huge
+                Hum.Health = Hum.MaxHealth
             end
-        end)
-    end
-    end)        
-
-        
+        end
+    end)
+end
+    end)
