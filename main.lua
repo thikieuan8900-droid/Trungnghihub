@@ -69,7 +69,7 @@ MainStroke.Color = Color3.fromRGB(255, 0, 0)
 MainStroke.Thickness = 1.2
 
 -- [SIDEBAR] CỘT BÊN TRÁI
-local SideBar = Instance.new("Frame", MainFrame)
+local SideBar = Instance.new("ScrollingFrame", MainFrame)
 SideBar.Size = UDim2.new(0, 130, 1, 0)
 SideBar.BackgroundColor3 = Color3.fromRGB(13, 13, 13) 
 SideBar.BorderSizePixel = 0
