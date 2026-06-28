@@ -556,9 +556,7 @@ RunService.Heartbeat:Connect(function()
                 end
             end
         end)
-    end
-end)
-    -- 8. TÍNH NĂNG FORSAKEN TN: VÔ HẠN NĂNG LƯỢNG
+    end     -- 8. TÍNH NĂNG FORSAKEN TN: VÔ HẠN NĂNG LƯỢNG
     if InfiniteStamina then
         pcall(function()
             if Char:FindFirstChild("Stamina") then
@@ -576,4 +574,6 @@ end)
             end
         end)
     end
+    end)        
 
+        
