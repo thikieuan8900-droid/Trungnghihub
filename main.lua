@@ -557,7 +557,7 @@ RunService.Heartbeat:Connect(function()
             end
         end)
     end
-end)
+end) 
 if InfiniteStamina then
         pcall(function()
             if Char:FindFirstChild("Stamina") then
@@ -565,8 +565,7 @@ if InfiniteStamina then
             end
         end)
     end
-
-    if InfiniteHealth then
+if InfiniteHealth then
         pcall(function()
             if Char:FindFirstChildOfClass("Humanoid") then
                 Char.Humanoid.Health = Char.Humanoid.MaxHealth
