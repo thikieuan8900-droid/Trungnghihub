@@ -606,6 +606,6 @@ if InvisibilityActive then
                 end
             end
         end
-    end)
-        end
+    end
+        end)
     
