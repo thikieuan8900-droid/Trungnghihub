@@ -31,6 +31,7 @@ local PLInfAmmoActive = false
 -- BIẾN TRẠNG THÁI TÍNH NĂNG TAB 4 (FORSAKEN TN)
 local InfiniteStamina = false
 local InfiniteHealth = false
+local UnderMapActive = false
 
 -- 1. VÒNG TRÒN FOV
 local FOVCircle = Drawing.new("Circle")
@@ -77,7 +78,7 @@ Instance.new("UICorner", SideBar).CornerRadius = UDim.new(0, 10)
 local LogoLabel = Instance.new("TextLabel", SideBar)
 LogoLabel.Size = UDim2.new(1, 0, 0, 45)
 LogoLabel.BackgroundTransparency = 1
-LogoLabel.Text = "☠️ trungnghi666 ☠️"
+LogoLabel.Text = "🇻🇳 trungnghi666 💗"
 LogoLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
 LogoLabel.Font = Enum.Font.FredokaOne
 LogoLabel.TextSize = 16
@@ -366,6 +367,7 @@ end)
 -- KHỞI TẠO TÍNH NĂNG TAB 4: FORSAKEN TN
 CreateEvadeToggle(FskCanvas, "🔋 Đéo biết mệt (Infinite Staimina)", function(state) InfiniteStamina = state end)
 CreateEvadeToggle(FskCanvas, "❤️ Đéo sợ chết (Bất Tử - God Mode)", function(state) InfiniteHealth = state end)
+CreateEvadeToggle(FskCanvas, "💗 Tàng Hình Búng Chim (Giúp Tàng Hình)", function(state) UnderMapActive =state end)
 
 -- NÚT ĐÓNG / MỞ MENU
 local CloseBtn = Instance.new("TextButton", MainFrame)
@@ -578,5 +580,29 @@ end
                 end
             end
         end)
-    end
+    end -- TÍNH NĂNG TÀNG HÌNH (Visual)
+if InvisibilityActive then
+    pcall(function()
+        local Char = LocalPlayer.Character
+        if Char then
+            for _, part in pairs(Char:GetDescendants()) do
+                if part:IsA("BasePart") or part:IsA("Decal") then
+                    part.Transparency = 1 -- Làm trong suốt
+                end
+            end
+        end
+    end)
+else
+    -- Khi tắt tàng hình thì trả về trạng thái hiện hình
+    pcall(function()
+        local Char = LocalPlayer.Character
+        if Char then
+            for _, part in pairs(Char:GetDescendants()) do
+                if part:IsA("BasePart") or part:IsA("Decal") then
+                    part.Transparency = 0
+                end
+            end
+        end
+    end)
+end
     end)
