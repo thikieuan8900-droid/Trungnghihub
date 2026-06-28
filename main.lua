@@ -369,19 +369,6 @@ end)
 CreateEvadeToggle(FskCanvas, "🔋 Đéo biết mệt (Infinite Staimina)", function(state) InfiniteStamina = state end)
 CreateEvadeToggle(FskCanvas, "❤️ Đéo sợ chết (Bất Tử - God Mode)", function(state) InfiniteHealth = state end)
 CreateEvadeToggle(FskCanvas, "💖 Tàng Hình Búng Chim (Giúp Tàng Hình)", function(state) UnderMapActive = state end)
-    InvisibilityActive = state -- Bật/Tắt biến
-    
-    if not state then -- Nếu tắt tàng hình, cho nhân vật hiện lại
-        local Char = game.Players.LocalPlayer.Character
-        if Char then
-            for _, part in pairs(Char:GetDescendants()) do
-                if part:IsA("BasePart") or part:IsA("Decal") then
-                    part.Transparency = 0 -- Hiện hình
-                end
-            end
-        end
-    end
-end)
 
 
 -- NÚT ĐÓNG / MỞ MENU
