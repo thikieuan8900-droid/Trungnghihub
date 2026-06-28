@@ -364,8 +364,8 @@ CreateEvadeButton(PLCanvas, "🔥 Tự Động Gun", function()
 end)
 
 -- KHỞI TẠO TÍNH NĂNG TAB 4: FORSAKEN TN
-CreateEvadeToggle(ForsakenCanvas, "🔋 Đéo biết mệt (Infinite Staimina)", function(state) InfiniteStamina = state end)
-CreateEvadeToggle(ForsakenCanvas, "❤️ Đéo biết chết (Bất Tử - God Mode)", function(state) InfiniteHealth = state end)
+CreateEvadeToggle(FskCanvas, "🔋 Đéo biết mệt (Infinite Staimina)", function(state) InfiniteStamina = state end)
+CreateEvadeToggle(FskCanvas, "❤️ Đéo biết chết (Bất Tử - God Mode)", function(state) InfiniteHealth = state end)
 
 -- NÚT ĐÓNG / MỞ MENU
 local CloseBtn = Instance.new("TextButton", MainFrame)
