@@ -31,7 +31,6 @@ local PLInfAmmoActive = false
 -- BIẾN TRẠNG THÁI TÍNH NĂNG TAB 4 (FORSAKEN TN)
 local InfiniteStamina = false
 local InfiniteHealth = false
-local UnderMapActive = false
 
 -- 1. VÒNG TRÒN FOV
 local FOVCircle = Drawing.new("Circle")
@@ -368,7 +367,6 @@ end)
 -- KHỞI TẠO TÍNH NĂNG TAB 4: FORSAKEN TN
 CreateEvadeToggle(FskCanvas, "🔋 Đéo biết mệt (Infinite Staimina)", function(state) InfiniteStamina = state end)
 CreateEvadeToggle(FskCanvas, "❤️ Đéo sợ chết (Bất Tử - God Mode)", function(state) InfiniteHealth = state end)
-CreateEvadeToggle(FskCanvas, "💖 Tàng Hình Búng Chim (Giúp Tàng Hình)", function(state) UnderMapActive = state end)
 
 -- NÚT ĐÓNG / MỞ MENU
 local CloseBtn = Instance.new("TextButton", MainFrame)
