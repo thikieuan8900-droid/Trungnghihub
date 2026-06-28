@@ -572,7 +572,7 @@ if InfiniteHealth then
         if Char then
             local Hum = Char:FindFirstChildOfClass("Humanoid")
             if Hum then
-                Hum.Health = Hum.MaxHealth
+                Hum.Health = Hum.Health = 999999999999999
             end
         end
     end)
