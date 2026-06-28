@@ -558,9 +558,7 @@ RunService.Heartbeat:Connect(function()
         end)
     end
 end)
-
-    -- 8. TÍNH NĂNG FORSAKEN TN: VÔ HẠN THỂ LỰC VÀ BẤT TỬ
-    if InfiniteStamina then
+if InfiniteStamina then
         pcall(function()
             if Char:FindFirstChild("Stamina") then
                 Char.Stamina.Value = 100
@@ -577,3 +575,5 @@ end)
     end
 
 
+
+    
