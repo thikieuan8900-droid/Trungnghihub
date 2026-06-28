@@ -370,7 +370,6 @@ CreateEvadeToggle(FskCanvas, "🔋 Đéo biết mệt (Infinite Staimina)", func
 CreateEvadeToggle(FskCanvas, "❤️ Đéo sợ chết (Bất Tử - God Mode)", function(state) InfiniteHealth = state end)
 CreateEvadeToggle(FskCanvas, "💖 Tàng Hình Búng Chim (Giúp Tàng Hình)", function(state) UnderMapActive = state end)
 
-
 -- NÚT ĐÓNG / MỞ MENU
 local CloseBtn = Instance.new("TextButton", MainFrame)
 CloseBtn.Size = UDim2.new(0, 20, 0, 20)
@@ -582,17 +581,5 @@ end
                 end
             end
         end)
-    end -- TÍNH NĂNG TÀNG HÌNH (Visual)
-if InvisibilityActive then
-    pcall(function()
-        local Char = LocalPlayer.Character
-        if Char then
-            for _, part in pairs(Char:GetDescendants()) do
-                if part:IsA("BasePart") or part:IsA("Decal") then
-                    part.Transparency = 1 -- Làm trong suốt
-                end
-            end
-        end
-    end
-        end)
+    end)
     
