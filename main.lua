@@ -13,7 +13,7 @@ local FlyActive = false
 local ESPActive = false
 
 local FOVRadius = 120 
-local CustomSpeed = 22 
+local CustomSpeed = 25 
 local FlySpeed = 50
 
 -- BIẾN TRẠNG THÁI TÍNH NĂNG HITBOX (MỚI THÊM)
@@ -574,8 +574,8 @@ end
                 local Hum = Char:FindFirstChildOfClass("Humanoid")
                 if Hum then
                     -- Cách 1: Ép máu về cực cao (thay vì MaxHealth)
-                    Hum.Health = 999999
-                    Hum.MaxHealth = 999999
+                    Hum.Health = Hum.MaxHealth
+                    Hum.MaxHealth = 5000
                 end
             end
         end)
